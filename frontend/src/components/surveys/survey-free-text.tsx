@@ -12,7 +12,8 @@ import { Survey } from "../../types/data";
 initializeIcons();
 
 export const SurveyFreeText: FunctionComponent = () => {
-  const items = ["First item in list", "another one"];
+  const [surveyData, setSurveyData] = useState<Survey | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const _onRenderColumn = (item?: any) => {
     return <div data-is-focusable={true}>{item}</div>;
