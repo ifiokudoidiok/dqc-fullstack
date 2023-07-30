@@ -1,5 +1,15 @@
-import { CheckboxVisibility, DetailsList, Stack } from "@fluentui/react";
-import { FunctionComponent } from "react";
+import {
+  CheckboxVisibility,
+  initializeIcons,
+  DetailsList,
+  IGroup,
+  Stack,
+} from "@fluentui/react";
+import { FunctionComponent, useEffect, useState } from "react";
+import survey_results from "../../data/survey_results.json";
+import { Survey } from "../../types/data";
+
+initializeIcons();
 
 export const SurveyFreeText: FunctionComponent = () => {
   const items = ["First item in list", "another one"];
