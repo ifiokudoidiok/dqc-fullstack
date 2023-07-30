@@ -26,9 +26,9 @@ We have included an example of the data you would get back from some API under `
 
 Your tasks are as follows with increasing levels of complexity
 
-1. CHORE: Please add good type definitions to the incoming `survey_results` data.
+1. [x] CHORE: Please add good type definitions to the incoming `survey_results` data.
    You can assume that this file is complete meaning it covers all the different data types and combinations thereof.
 
-2. FEATURE: Aggregate all opinion scale questions to get an overall happiness score and display this prominently (see designs).
+2. [x] FEATURE: Aggregate all opinion scale questions to get an overall happiness score and display this prominently (see designs).
 
-3. FEAUTRE: Show all free text responses in a table. These should be grouped by their questions with collapsable headers (see designs).
+3. [x] FEAUTRE: Show all free text responses in a table. These should be grouped by their questions with collapsable headers (see designs).
