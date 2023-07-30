@@ -15,7 +15,7 @@ export const SurveyFreeText: FunctionComponent = () => {
   const [surveyData, setSurveyData] = useState<Survey | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const _onRenderColumn = (item?: any) => {
+  const _onRenderColumn = (item?: string) => {
     return <div data-is-focusable={true}>{item}</div>;
   };
   return (
