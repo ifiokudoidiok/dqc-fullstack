@@ -59,10 +59,32 @@ class DataClass:
         return rows_with_missing_values_indexes
 
     def check_outliers(self) -> Dict[column_name, List[int]]:
-        # Outliers are defined by the 1.5 IQR method.
-        # see https://towardsdatascience.com/why-1-5-in-iqr-method-of-outlier-detection-5d07fdc82097
-        # for a detailed explanation
-        # Return a dict mapping column name to a list of row indexes which are outliers
+        # Define a helper function to find outliers for a given column using the 1.5 IQR method
+        def get_outliers(col):
+            # Calculate the first quartile (Q1) and third quartile (Q3)
+            q1 = col.quantile(0.25)
+            q3 = col.quantile(0.75)
+            
+            # Calculate the interquartile range (IQR)
+            iqr = q3 - q1
+            
+            # Find the outliers using the 1.5 IQR method (values outside the range [Q1 - 1.5 * IQR, Q3 + 1.5 * IQR])
+            outliers = col[(col < (q1 - 1.5 * iqr)) | (col > (q3 + 1.5 * iqr))].index.tolist()
+            
+            return outliers
+
+        # Create a dictionary to store rows with outliers for each numeric column
+        outlier_rows = {}
+        
+        # Iterate through each column in the DataFrame
+        for column in self.df.columns:
+            # Check if the data type of the column is numeric (int64 or float64)
+            if self.df[column].dtype in ['int64', 'float64']:
+                # If the column is numeric, find the outliers using the helper function and store them in the dictionary
+                outlier_rows[column] = get_outliers(self.df[column])
+        
+        # Return the dictionary containing rows with outliers for each numeric column
+        return outlier_rows
 
         return {}
 
