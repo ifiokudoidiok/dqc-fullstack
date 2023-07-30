@@ -39,21 +39,32 @@ export const SurveyFreeText: FunctionComponent = () => {
 
   return (
     <Stack data-testid="FreeTextTable">
-      <DetailsList
-        checkboxVisibility={CheckboxVisibility.hidden}
-        items={items}
-        columns={[{ key: "Free text", name: "Free text", minWidth: 200 }]}
-        ariaLabelForSelectAllCheckbox="Toggle selection for all items"
-        ariaLabelForSelectionColumn="Toggle selection"
-        checkButtonAriaLabel="select row"
-        checkButtonGroupAriaLabel="select section"
-        groupProps={{
-          isAllGroupsCollapsed: true,
-          showEmptyGroups: true,
-        }}
-        onRenderItemColumn={_onRenderColumn}
-        compact={true}
-      />
+      {surveyData && (
+        <DetailsList
+          checkboxVisibility={CheckboxVisibility.hidden}
+          items={freeTextAnswers?.map((q) => q.responses).flat() || []}
+          groups={
+            loading
+              ? [{ name: "Loading...", startIndex: 0, count: 0 } as IGroup]
+              : (freeTextAnswers?.map((q, i) => ({
+                  name: q.question_text,
+                  startIndex: i,
+                  count: q.responses.length,
+                })) as IGroup[])
+          }
+          columns={[{ key: "Free text", name: "Free text", minWidth: 200 }]}
+          ariaLabelForSelectAllCheckbox="Toggle selection for all items"
+          ariaLabelForSelectionColumn="Toggle selection"
+          checkButtonAriaLabel="select row"
+          checkButtonGroupAriaLabel="select section"
+          groupProps={{
+            isAllGroupsCollapsed: true,
+            showEmptyGroups: true,
+          }}
+          onRenderItemColumn={_onRenderColumn}
+          compact={true}
+        />
+      )}
     </Stack>
   );
 };
