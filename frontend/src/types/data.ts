@@ -7,5 +7,5 @@ export interface Survey {
 export interface Question {
   question_text: string;
   type: string; 
-  responses: string[]; 
+  responses: number[] | string[]; 
 }
