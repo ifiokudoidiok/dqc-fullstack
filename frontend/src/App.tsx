@@ -1,5 +1,10 @@
 import { FontIcon, initializeIcons, Stack, Text } from "@fluentui/react";
 import { SurveyFreeText } from "./components/surveys/survey-free-text";
+import survey_results from "../src/data/survey_results.json";
+import { useEffect, useState } from "react";
+import { calculateOverallScore, formatDateToDDMMYYYY } from "./utils";
+import { Question, Survey } from "./types/data";
+
 initializeIcons();
 
 function App() {
