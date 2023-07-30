@@ -58,7 +58,6 @@ export const SurveyFreeText: FunctionComponent = () => {
           checkButtonAriaLabel="select row"
           checkButtonGroupAriaLabel="select section"
           groupProps={{
-            isAllGroupsCollapsed: true,
             showEmptyGroups: true,
           }}
           onRenderItemColumn={_onRenderColumn}
