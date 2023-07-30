@@ -8,7 +8,47 @@ import { Question, Survey } from "./types/data";
 initializeIcons();
 
 function App() {
-  const happinessScore = 73;
+  // Default values for happiness score and participants
+  let happinessScore = 73;
+  let participants = 0;
+  const [surveyData, setSurveyData] = useState<Survey | null>(null);
+
+  useEffect(() => {
+    async function fetchSurveyData() {
+      try {
+        
+        const data: Survey = await survey_results;
+        setSurveyData(data);
+      } catch (error) {
+        console.error("Error fetching survey data:", error);
+      }
+    }
+
+    fetchSurveyData();
+  }, []);
+
+  // Filter survey questions of type "number" to get questions with scores
+  const opinionWithScores = surveyData?.questions?.filter(
+    (question) => question.type === "number"
+  ) as Question[];
+
+
+  // Calculate overall scores per question and the aggregated happiness score
+  const scoresPerQuestion = opinionWithScores?.map((question) => {
+    participants = question.responses.length;
+
+    // Ensure all responses are converted to numbers
+    const scores = question.responses.map((response) =>
+      typeof response === "string" ? parseInt(response, 10) : response
+    );
+    return calculateOverallScore(scores);
+  });
+
+  const aggrHappinessScore =
+    (scoresPerQuestion?.reduce((acc, score) => acc + score, 0) || 0) /
+    (scoresPerQuestion?.length || 1);
+
+  happinessScore = Math.floor(aggrHappinessScore);
 
   return (
     <Stack style={{ margin: 20 }}>
