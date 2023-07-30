@@ -49,8 +49,14 @@ class DataClass:
         return duplicate_groups
 
     def check_missing_values(self) -> List[int]:
-        # Return the row indexes which contain empty values
-        return []
+        # Check for rows with missing (null) values in the DataFrame
+        rows_with_missing_values = self.df[self.df.isnull().any(axis=1)]
+        
+        # Extract the row indexes of the rows with missing values and convert them to a list
+        rows_with_missing_values_indexes = rows_with_missing_values.index.tolist()
+        
+        # Return the list of row indexes with missing values
+        return rows_with_missing_values_indexes
 
     def check_outliers(self) -> Dict[column_name, List[int]]:
         # Outliers are defined by the 1.5 IQR method.
