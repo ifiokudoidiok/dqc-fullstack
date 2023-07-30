@@ -35,8 +35,18 @@ class DataClass:
         return non_uniform_rows
 
     def check_duplicates(self) -> List[Tuple[int]]:
-        # Return a list of tuples of row indexes where each tuple represents a duplicate group
-        return []
+        # Find rows that are duplicated in the DataFrame, considering all columns (keep=False)
+        duplicate_rows = self.df[self.df.duplicated(keep=False)]
+        
+        # Group the duplicated rows by their contents across all columns
+        grouped_duplicates = duplicate_rows.groupby(duplicate_rows.columns.tolist())
+        
+        # Create a list of tuples containing the row indexes for each duplicate group
+        # The tuple structure represents (row_index_1, row_index_2, ..., row_index_n) for each duplicate group
+        duplicate_groups = [tuple(group.index.tolist()) for _, group in grouped_duplicates]
+        
+        # Return the list of duplicate groups
+        return duplicate_groups
 
     def check_missing_values(self) -> List[int]:
         # Return the row indexes which contain empty values
