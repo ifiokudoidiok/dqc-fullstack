@@ -52,19 +52,30 @@ function App() {
 
   return (
     <Stack style={{ margin: 20 }}>
-      <h1>
-        <FontIcon iconName="ClipboardList" style={{ marginRight: "5px" }} />
-        Insert survey title here
-      </h1>
+    {/* Survey Title */}
+    <h1>
+      <FontIcon iconName="ClipboardList" style={{ marginRight: "5px" }} />
+      {surveyData?.survey_title}
+    </h1>
 
-      <h1 data-testid="happinessScore">
-        <FontIcon iconName="ChatBot" style={{ marginRight: "5px" }} />
-        {happinessScore} / 100
-      </h1>
-      <Stack>
-        <SurveyFreeText />
-      </Stack>
+    {/* Survey Metadata */}
+    <Text>
+      This survey was started on{" "}
+      {formatDateToDDMMYYYY(surveyData?.created_at)}. Overall, {participants}{" "}
+      people participated in the survey.
+    </Text>
+
+    {/* Happiness Score */}
+    <h1 data-testid="happinessScore">
+      <FontIcon iconName="ChatBot" style={{ marginRight: "5px" }} />
+      {happinessScore} / 100
+    </h1>
+
+    {/* Render the SurveyFreeText component */}
+    <Stack>
+      <SurveyFreeText />
     </Stack>
+  </Stack>
   );
 }
 
