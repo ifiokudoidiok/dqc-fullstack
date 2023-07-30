@@ -18,6 +18,25 @@ export const SurveyFreeText: FunctionComponent = () => {
   const _onRenderColumn = (item?: string) => {
     return <div data-is-focusable={true}>{item}</div>;
   };
+
+  useEffect(() => {
+    setLoading(true);
+    // Convert responses to strings in the survey_results data
+    const updatedSurveyData: Survey = {
+      ...survey_results,
+      questions: survey_results.questions.map((question) => ({
+        ...question,
+        responses: question.responses.map((response) => response.toString()),
+      })),
+    };
+    setSurveyData(updatedSurveyData);
+    setLoading(false);
+  }, []);
+
+  const freeTextAnswers = surveyData?.questions?.filter(
+    (question) => question.type === "text"
+  );
+
   return (
     <Stack data-testid="FreeTextTable">
       <DetailsList
