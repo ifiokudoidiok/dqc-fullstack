@@ -18,9 +18,21 @@ class DataClass:
         self.df: pd.DataFrame = pd.read_csv(path, sep=separator)
 
     def check_uniformity(self) -> Dict[column_name, List[int]]:
-        # Return a dict mapping column name to a list of row indexes which are not uniform
-
-        return {}
+        # Create a dictionary to store non-uniform rows for each column
+        non_uniform_rows = {}
+        
+        # Iterate through each column in the DataFrame
+        for column in self.df.columns:
+            # Convert the column to numeric data type, setting non-numeric elements to NaN
+            is_numeric = pd.to_numeric(self.df[column], errors="coerce").notna()
+            
+            # Check if there is at least one numeric element and at least one non-numeric element in the column
+            if is_numeric.sum() > 0 and is_numeric.sum() < len(self.df):
+                # If both numeric and non-numeric elements are present, add the non-numeric rows to the dictionary
+                non_uniform_rows[column] = self.df[~is_numeric].index.tolist()
+        
+        # Return the dictionary containing non-uniform rows for each column
+        return non_uniform_rows
 
     def check_duplicates(self) -> List[Tuple[int]]:
         # Return a list of tuples of row indexes where each tuple represents a duplicate group
